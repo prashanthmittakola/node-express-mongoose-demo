@@ -1,0 +1,28 @@
+extends ../layouts/default
+
+block main
+  h1=title 
+
+block content
+  - if (posts.length)
+    each post, index in posts
+      div(class=`py-4 ${index && 'border-top'}`)
+        include post
+  - else
+    h4.text-muted No Posts.&nbsp;
+      a(href="/posts/new") create one
+   
+
+    - if (pages > 1)
+      ul.pagination
+        - var arr = paginate({ currentPage: page, totalPages: pages })
+        each item in arr
+          li.page-item(class=item.isActive && item.type === 'PAGE' && 'active')
+            a.page-link(href=`?page=${item.value}`)
+              case item.type
+                when 'FIRST_PAGE_LINK': | First
+                when 'PREVIOUS_PAGE_LINK': | Previous
+                when 'PAGE': =item.value
+                when 'ELLIPSIS': | ...
+                when 'NEXT_PAGE_LINK': | Next
+                when 'LAST_PAGE_LINK': | Last

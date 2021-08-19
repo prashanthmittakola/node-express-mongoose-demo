@@ -1,0 +1,14 @@
+div.post
+  h3
+    a(href='/posts/'+post._id, title=post.title) #{post.title.slice(0, 140)}
+  p= post.description.slice(0, 400)
+
+  .meta
+    span.text-muted= formatDate(post.createdAt)
+
+    -if (post.user)
+      | &nbsp; - &nbsp;
+      span Author &nbsp;
+
+      -var name= post.user.name ? post.user.name : "unknown"
+      span.text-success= name

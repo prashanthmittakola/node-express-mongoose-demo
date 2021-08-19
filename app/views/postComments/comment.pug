@@ -1,0 +1,14 @@
+- if (comment)
+  - var name = comment.user ? comment.user.name : "unknown"
+    a(href="javascript:void(0)")= name
+    |  :&nbsp;
+    = comment.body.slice(0, 1000)
+
+    form.form-inline(role="form", method="post", action="/posts/" + post._id + "/comments/" + comment._id, onsubmit="return confirm('Are you sure?')")
+      input(type='hidden', name='_csrf', value=csrf_token)
+      span.text-muted= formatDate(comment.createdAt)
+
+      -if(req.user)
+        - if (comment.user.id === req.user.id)
+          input(type="hidden", name="_method", value="DELETE")
+          button.btn.btn-link.text-danger(type="submit") delete
